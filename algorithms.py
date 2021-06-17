@@ -1,3 +1,4 @@
+#Konrad Maciejczyk, 2021
 import numpy as np 
 
 class Nearest_centroid(object):
