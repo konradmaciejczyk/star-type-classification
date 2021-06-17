@@ -1,6 +1,6 @@
 import numpy as np 
 
-class MIN_centroid(object):
+class Nearest_centroid(object):
     """A nearest centroid classifier. Similar class to NearestCentroid from module sklearn.neighbors.
     Methods:
         fit(np.array(X_train), np.array(y_train)) - model training method
@@ -100,3 +100,33 @@ class KNN:
     def _distance(self, A):
         """Auxillary method for computing distances between one of the testing vector and other training vectors"""
         return np.sqrt(np.sum(np.power(A - self.x_train, 2), axis = 1))    
+
+if __name__ == "__main__":
+    from sklearn.datasets import load_breast_cancer
+    from sklearn.model_selection import train_test_split
+    from sklearn.datasets import load_breast_cancer
+
+    print("Testing algorithms for breast cancer wisconsin dataset\n")
+
+    cancer = load_breast_cancer()
+    x_train, x_test, y_train, y_test = train_test_split(cancer.data, cancer.target, random_state = 0)
+
+
+    clf = Nearest_centroid()
+    clf.fit(x_train, y_train)
+
+    print('NearestCentroid results:\n {}'.format(clf.predict(x_train)[:10]))
+    print("Testing set score accuracy: {:.2f}%".format(clf.score(x_test, y_test)*100))
+    print("Training set score accuracy: {:.2f}%".format(clf.score(x_train, y_train)*100))
+
+    print("\n", '*'*60, sep="")
+    #==================================================================================================================================
+    print('*'*60, "\n")
+
+    neighbors = 3
+    clf = KNN(k = neighbors)
+    clf.fit(x_train, y_train)
+
+    print('K-Nearest neighbors ({}) results:\n {}'.format(neighbors, clf.predict(x_train)[:10]))
+    print("Training set score accuracy:{:.2f}%".format(clf.score(x_train, y_train)*100))
+    print("Testing set score accuracy: {:.2f}%". format(clf.score(x_test, y_test)*100))
